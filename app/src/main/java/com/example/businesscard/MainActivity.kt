@@ -1,6 +1,5 @@
 package com.example.businesscard
 
-import android.icu.text.CaseMap.Title
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,9 +9,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Call
+import androidx.compose.material.icons.rounded.Email
+import androidx.compose.material.icons.rounded.Share
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -85,14 +90,42 @@ fun BusinessCardTop(
     }
 }
 
+@Composable
+fun BusinessCardBottom(
+    number: String,
+    email: String,
+    social: String
+){
+    Column {
+        Row {
+            Icon(Icons.Rounded.Call,contentDescription = "PhoneIcon")
+            Text(text = number)
+        }
+        Row {
+            Icon(Icons.Rounded.Share, contentDescription = "SocialMediaIcon")
+            Text(text = social)
+        }
+        Row {
+            Icon(Icons.Rounded.Email, contentDescription = "EmailIcon")
+            Text(text = email)
+        }
+    }
+}
 @Preview(showBackground = true)
 @Composable
 fun BusinessCardPreview() {
     BusinessCardTheme {
-        BusinessCardTop(
-            title = stringResource(R.string.title_dev),
-            desc = stringResource(R.string.desc_dev),
-            backgroundColor = Color(0xFF0a3628)
-        )
+        Column(horizontalAlignment = Alignment.CenterHorizontally){
+            BusinessCardTop(
+                title = stringResource(R.string.title_dev),
+                desc = stringResource(R.string.desc_dev),
+                backgroundColor = Color(0xFF0a3628)
+            )
+            BusinessCardBottom(
+                number = "+55(61)999999999",
+                email = "email@email.com.br",
+                social = "github.com/pcconduru"
+            )
+        }
     }
 }
