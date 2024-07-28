@@ -10,7 +10,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -39,12 +42,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Surface(modifier = Modifier.fillMaxSize()) {
-                BusinessCardTheme {
-                    BusinessCardTop(
-                        title = stringResource(R.string.title_dev),
-                        desc = stringResource(R.string.desc_dev),
-                        backgroundColor = Color.Red)
+            Surface(modifier = Modifier.fillMaxSize(), color = Color(0xFFcffad5)) {
+                BusinessCardTheme{
+                    BusinessCard()
                 }
             }
         }
@@ -59,73 +59,111 @@ fun BusinessCardTop(
     modifier: Modifier = Modifier
 ) {
     val image = painterResource(R.drawable.android_logo)
-    Column (
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.background(Color(0xFFd8ffd4))
-    ){
-        Box(modifier = Modifier.background(Color(0xFF0a3628))) {
-            Image(
-                painter = image,
-                contentDescription = null,
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        )
+         {
+            Box(modifier = Modifier.background(Color(0xFF0a3628))) {
+                Image(
+                    painter = image,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(100.dp)
+                        .padding(12.dp)
+                )
+            }
+            Text(
+                text = title,
+                fontSize = 38.sp,
+                fontWeight = FontWeight.Bold,
+                lineHeight = 35.sp,
+                textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .size(150.dp)
-                    .padding(12.dp)
+                    .padding(top = 10.dp, bottom = 5.dp)
+            )
+            Text(
+                text = desc,
+                fontSize = 12.sp,
+                fontStyle = FontStyle.Italic,
+                color = Color(0xFF06420e)
             )
         }
-        Text(
-            text = title,
-            fontSize = 38.sp,
-            fontWeight = FontWeight.Bold,
-            lineHeight = 35.sp,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .padding(top = 10.dp, bottom = 5.dp)
-        )
-        Text(
-            text = desc,
-            fontSize = 12.sp,
-            fontStyle = FontStyle.Italic
-        )
     }
-}
 
 @Composable
 fun BusinessCardBottom(
     number: String,
     email: String,
-    social: String
+    social: String,
+    modifier: Modifier = Modifier
 ){
     Column {
-        Row {
-            Icon(Icons.Rounded.Call,contentDescription = "PhoneIcon")
-            Text(text = number)
+        Row(Modifier.padding(bottom = 12.dp)) {
+            Icon(
+                Icons.Rounded.Call,
+                contentDescription = "PhoneIcon",
+                modifier = Modifier.padding(end = 12.dp),
+                tint = Color(0xFF01690f)
+            )
+            Text(text = number, textAlign = TextAlign.Center, color = Color(0xFF01690f))
+        }
+        Row(Modifier.padding(bottom = 12.dp)) {
+            Icon(
+                Icons.Rounded.Share,
+                contentDescription = "SocialMediaIcon",
+                modifier = Modifier.padding(end = 12.dp),
+                tint = Color(0xFF01690f)
+            )
+            Text(text = social, textAlign = TextAlign.Center, color = Color(0xFF01690f))
         }
         Row {
-            Icon(Icons.Rounded.Share, contentDescription = "SocialMediaIcon")
-            Text(text = social)
-        }
-        Row {
-            Icon(Icons.Rounded.Email, contentDescription = "EmailIcon")
-            Text(text = email)
+            Icon(
+                Icons.Rounded.Email,
+                contentDescription = "EmailIcon",
+                modifier = Modifier.padding(end = 12.dp),
+                tint = Color(0xFF01690f)
+            )
+            Text(text = email, textAlign = TextAlign.Center, color = Color(0xFF01690f))
         }
     }
 }
+
+@Composable
+fun BusinessCard() {
+    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center){
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .height(280.dp),
+            contentAlignment = Alignment.Center)
+        {
+            BusinessCardTop(
+                title = stringResource(R.string.title_dev),
+                desc = stringResource(R.string.desc_dev),
+                backgroundColor = Color.White
+            )
+        }
+
+        Spacer(modifier = Modifier.height(224.dp))
+
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .height(120.dp),
+            contentAlignment = Alignment.Center)
+        {
+            BusinessCardBottom(
+                number = "+55(61)999999999",
+                email = "email@email.com.br",
+                social = "github.com/pcconduru",
+            )
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun BusinessCardPreview() {
     BusinessCardTheme {
-        Column(horizontalAlignment = Alignment.CenterHorizontally){
-            BusinessCardTop(
-                title = stringResource(R.string.title_dev),
-                desc = stringResource(R.string.desc_dev),
-                backgroundColor = Color(0xFF0a3628)
-            )
-            BusinessCardBottom(
-                number = "+55(61)999999999",
-                email = "email@email.com.br",
-                social = "github.com/pcconduru"
-            )
-        }
+        BusinessCard()
     }
 }
