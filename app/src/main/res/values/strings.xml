@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BusinessCard</string>
+    <string name="title_dev">Paulo César Developer</string>
+    <string name="desc_dev">Desenvolvedor Android Kotlin</string>
+</resources>
